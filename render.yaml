@@ -1,0 +1,80 @@
+
+services:
+  - type: web
+    name: jarvis
+    runtime: node
+    plan: free
+
+    buildCommand: bash render-build.sh && npm --prefix server install --include=dev && npm --prefix web install --include=dev && npm --prefix web run build
+
+    startCommand: npm --prefix server start
+    healthCheckPath: /
+
+    envVars:
+      # Sistem
+      - key: NODE_VERSION
+        value: "22"
+
+      - key: ACCESS_TOKEN
+        generateValue: true
+
+      # Yapay zekâ API anahtarları
+      - key: GEMINI_API_KEY
+        sync: false
+
+      - key: OPENAI_API_KEY
+        sync: false
+
+      - key: ANTHROPIC_API_KEY
+        sync: false
+
+      - key: XAI_API_KEY
+        sync: false
+
+      - key: GROQ_API_KEY
+        sync: false
+
+      - key: OPENROUTER_API_KEY
+        sync: false
+
+      - key: DEEPSEEK_API_KEY
+        sync: false
+
+      - key: MISTRAL_API_KEY
+        sync: false
+
+      # Eski LLM uyumluluğu
+      - key: LLM_API_KEY
+        sync: false
+
+      - key: LLM_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai
+
+      # Model ayarları
+      - key: CHAT_MODEL
+        value: gemini-3.8-flash
+
+      - key: VISION_MODEL
+        value: gemini-3.8-flash
+
+      - key: STT_MODEL
+        value: gemini-3.8-flash
+
+      - key: TTS_MODEL
+        value: browser
+
+      - key: TTS_VOICE
+        value: tarayici
+
+      # Kullanıcı ve konum
+      - key: USER_NAME
+        value: Halil
+
+      - key: WEATHER_CITY
+        value: Sanliurfa
+
+      - key: WEATHER_LAT
+        value: "37.1674"
+
+      - key: WEATHER_LON
+        value: "38.7955"
